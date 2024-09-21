@@ -13,15 +13,16 @@
 defer: html 파싱과정에서 다운로드도 실행도 병렬로 수행
 
 함수의 본질: 코드를 일괄적으로 실행시키는 것
-내 작업공간이 루트폴더가 되도록
 
+내 작업공간이 루트폴더가 되도록
 새폴더 생성 후 cd
+```
 npm init -y
 npm install typescript -D (루트폴더에만)
 npm install -D ts-node (루트폴더에만)
 npx tsc -v
 npx ts-node -v
-
+```
 view -> command Pallete -> 맨 아래 code runner 추가
 ```
 # setting
