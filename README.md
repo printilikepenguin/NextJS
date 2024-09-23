@@ -40,3 +40,30 @@ Symbol 타입 첨봄 ㅁㅊ
 
 </div>
 </details>
+
+<details>
+<summary>0923</summary>
+<div markdown="2">
+
+[엔피엠 트렌드](https://npmtrends.com)
+
+리액트에서 클래스를 사용하지 않게된 계기
+[확인](https://ko.legacy.reactjs.org/docs/hooks-intro-html#motivation)
+
+가상 DOM이 실제 DOM보다 무조건적으로 빠른 것은 아니다
+리액트는 실제 DOM을 기반으로 가상 DOM을 2개 만들고, 뭔가 업데이트가 생기면 업데이트 전/후 가상 DOM을 비교하면서 변경된 부분을 찾게 되는데요, 이 과정이 바로 Diffing(디핑)입니다.
+```
+업데이트 전
+<div>
+	<p>안녕하세요</p>
+</div>
+
+업데이트 후
+<div>
+	<p>안녕히계세요!</p>
+</div>
+```
+상태가 변경될수 있는 동적인 콘텐츠보다 정적인 콘텐츠가 더 많다면, 특정 상황에서는 가상 DOM에서 Diffing을 진행하는 과정이 비효율적이고 느리다고 볼 수 있을 것 같습니다.
+다만 그렇다고 해도 일반적인 경우에는 가상 DOM이 충분히 빠르기 때문에 굳이 이러한 이유로 가상 DOM을 사용하는 리액트를 기피해야 할 이유는 전혀 없다고 생각합니다 
+</div>
+</details>
