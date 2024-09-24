@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .item-middle {
+    @apply flex flex-col justify-center items-center min-h-screen gap-4;
+  }
+}

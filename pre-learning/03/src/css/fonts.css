@@ -1,0 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap");
+
+@font-face {
+  font-family: "doldams";
+  src: url("../fonts/doldam.woff2") format("woff2"),
+    url("../fonts/doldam.woff") format("woff");
+}
