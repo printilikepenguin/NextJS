@@ -173,8 +173,113 @@ props내릴때 요소말고 {children}:{children:ReactNode}로 내리는 이유:
 </details>
 
 <details>
-<summary>템플릿</summary>
+<summary>0925</summary>
 <div markdown="4">
+
+React.ComponentPropsWithoutRef<"HTML태그">
+많이씁니덩
+웹접근성!!! 마크업 단어 잘 쓸 것!!
+번들러!!!!
+항상 빌드속도와 렌더링을 신경쓸것
+
+useId 리액트 훅 들어본사람... 완성되어있는 기능을 제공해주는 함수
+
+````
+<Input
+                type="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
+              />
+              ```
+
+validation 검증패키지 : 조드 ... 확인필
+
+나 유효성 검사
+```
+ // 유효성 검사
+    const [isUsernameValid, setIsUsernameValid] = useState(false);
+    const [isPasswordValid, setIsPasswordValid] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(false);
+    const [sendcode, setSendcode] = useState(false)
+```
+이렇게 했는데
+```
+const loginValid = email.trim() === password.trim()
+이런식으로 트루만들기도 하네염
+```
+html은 조작이 가능하기 때문에 js로 유효성 검증필필
+
+useRef는 JSX 요소 참조할 때 사용
+```
+ // 특정 JSX 요소 참조하고 시플때!!!
+  const inputEl = useRef<HTMLInputElement>(null); //document.auerySelector('input')같은 거
+    const onClickHandler = () => {
+    if (email.trim() === "") {
+      alert("이메일입력플리즈");
+      inputEl.current?.focus();
+      return;
+    }
+    if (password.trim() === "") {
+      alert("비번입력플리즈");
+      inputEl.current?.focus();
+      return;
+    }
+  };
+
+ ```
+이럼 알림뜨고 커서가 자동으로 깜빡임 내가 원하는 인풋창에...
+
+```
+        <Input
+          ref={inputEl}
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        일케했으 ㄹ때
+        아래 오류남 without을 with으로 해줘야하는데 그럼 타입 지랄남
+        type InputProps = Omit<React.ComponentPropsWithoutRef<"input">, "type"> & {
+  type:
+    | "text"
+    | "password"
+    | "email"
+    | "number"
+    | "tel"
+    | "url"
+    | "search"
+    | "date"
+    | "time"
+    | "datetime-local"
+    | "month"
+    | "week"
+    | "color";
+};
+
+그럼 어케 하냐?..
+
+export default function Input(props: InputProps) {
+  이 함수 표현식을 const로 수정하는 거임...
+  글고 두번째 매개변수를 ref로 넘겨줌...
+const Input = forwardRef<HTML.InputElement, InputProps>((props, ref) => {
+  return ();
+})
+
+// Ref 속성 받을 때 쓰는 리액트만의 함수....
+forwardRef()
+```
+자,, 고차원 컴포넌트가 뭔지 알면 댐....
+
 
 </div>
 </details>
+
+<details>
+<summary>템플릿</summary>
+<div markdown="5">
+
+</div>
+</details>
+````
