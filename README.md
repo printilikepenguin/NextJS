@@ -4,8 +4,6 @@
 <summary>0920</summary>
 <div markdown="1">
 
-### 0920
-
 웹브라우저는 어떤 파일을 읽어낼 수 있을까? 대표적으로 HTML
 내부 스크립트 js 혹은 외부 js 가져와서 쓸 수 있음
 **defer, async 옵션**
@@ -77,7 +75,7 @@ Symbol 타입 첨봄 ㅁㅊ
 </details>
 
 <details>
-<summary>템플릿</summary>
+<summary>0924</summary>
 <div markdown="3">
 
 html+css 공부 필수다 꼭 해라 예..
@@ -184,7 +182,7 @@ React.ComponentPropsWithoutRef<"HTML태그">
 
 useId 리액트 훅 들어본사람... 완성되어있는 기능을 제공해주는 함수
 
-````
+```
 <Input
                 type="password"
                 placeholder="Enter Password"
@@ -192,11 +190,12 @@ useId 리액트 훅 들어본사람... 완성되어있는 기능을 제공해주
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="off"
               />
-              ```
+```
 
 validation 검증패키지 : 조드 ... 확인필
 
 나 유효성 검사
+
 ```
  // 유효성 검사
     const [isUsernameValid, setIsUsernameValid] = useState(false);
@@ -204,14 +203,18 @@ validation 검증패키지 : 조드 ... 확인필
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [sendcode, setSendcode] = useState(false)
 ```
+
 이렇게 했는데
+
 ```
 const loginValid = email.trim() === password.trim()
 이런식으로 트루만들기도 하네염
 ```
+
 html은 조작이 가능하기 때문에 js로 유효성 검증필필
 
 useRef는 JSX 요소 참조할 때 사용
+
 ```
  // 특정 JSX 요소 참조하고 시플때!!!
   const inputEl = useRef<HTMLInputElement>(null); //document.auerySelector('input')같은 거
@@ -228,7 +231,8 @@ useRef는 JSX 요소 참조할 때 사용
     }
   };
 
- ```
+```
+
 이럼 알림뜨고 커서가 자동으로 깜빡임 내가 원하는 인풋창에...
 
 ```
@@ -270,11 +274,134 @@ const Input = forwardRef<HTML.InputElement, InputProps>((props, ref) => {
 // Ref 속성 받을 때 쓰는 리액트만의 함수....
 forwardRef()
 ```
-자,, 고차원 컴포넌트가 뭔지 알면 댐....
 
+자,, 고차원 컴포넌트가 뭔지 알면 댐....
 
 </div>
 </details>
+
+<details>
+<summary>0926</summary>
+<div markdown="5">
+
+생명주기는 useEffect로 다 관리가능
+마운트/언마운트, 생성 등..
+useEffect는 컴포넌트 관점임..
+UI가 흔들리는건 신경X
+
+부하있는컴포넌트에서 화면흔들리는게 보여주기싫다면 useLayoutEffect가 있음
+레이아웃중심이라 컴포넌트 렌더링 후 UI 정리될때까지 화면노출X
+상태값따라 컴포넌트가 달라지는 경우 사용
+
+```
+import { useLayoutEffect, useState } from "react";
+
+export default function App() {
+  const [count, setCount] = useState(0);
+  const now = performance.now();
+  while (performance.now() - now < 200) {
+    // Artificial delay -- do nothing for 200ms
+  }
+
+  useLayoutEffect(() => {
+    if (count === 10) setCount(0);
+    console.log("useEffect");
+  }, [count]);
+
+  return (
+    <>
+      <div>count: {count}</div>
+      <button onClick={() => setCount(10)}>upupup</button>
+      {/* <Todo /> */}
+    </>
+  );
+}
+
+```
+
+state lifting
+
+UUID: 고유 아이디 만들어주는 라이브러리인데 id가 스트링으로 들어옴 ㅠㅠ
+컴포넌트 분리안하면 리렌터링 효율적으로 제어 불가
+리액트는 변경될때마다 렌더링되기땜에 메모이제이션 사용하는 편
+
+**메모이제이션**
+어차피 같은 값이면 재렌더링하지말고 메모리저장해놨다가 가져다 쓰자!!
+가장 첫단계!!! 컴포넌트를 메모이제이션
+
+자기값, props 변경되면 메모이제이션 작동안함
+
+React.memo: 컴포넌트 메모이제이션할 때 씀
+useCallback: 함수를 메모이제이션할 때
+useMemo: 값을 메모이제이션할 때
+
+useState는 렌더링의 영향을 안받음(약간 자동메모이제이션된것처럼)
+그래서 투두만들때 투두리스트아이템 컴포넌트랑 삭제등록 함수만 메모이제이션해주면 투두리스트는 재렌더링여러번안됨
+
+```
+이전값참조할거면useCallback은 value로 써주어댐
+todos.filter((todo)=>todo.id!==id) // 이렇게하면안댐
+// 아래처럼
+setTodos((todos) => todos.filter((todo) => todo.id !== id));
+```
+
+반복문에만 메모이제이션 잘해줘도 렌더링 문제 괘안아짐
+
+**컨택스트**
+프롭스 드릴링 해결하는 전역상태와
+스케이트관리
+
+useReducer(reducer, initialState)
+( 리듀서 정의함수와, 초기값)
+
+```
+
+const reducer = (state: number, action: string) => {
+  switch (action) {
+    case "INCREMENT":
+      return state + 1;
+    case "DECREMENT":
+      return state - 1;
+    case "RESET":
+      return 0;
+    default:
+      return state;
+  }
+};
+
+export default function App() {
+  // 리듀서썼을 때
+  const [cnt, setCnt] = useReducer(reducer, 0);
+
+  // 안썼을 때
+  const [count, setCount] = useState(0);
+
+  const incrementCount = () => {
+    setCount((count) => count + 1);
+  };
+
+  const resetCount = () => {
+    setCount(0);
+  };
+```
+
+리듀서는 보통 src아래 reducer라고 폴더 따로 빼둠
+useState라고 생각하면 편함
+
+**context API**
+
+1. createContext: 공급자 생성 (context 생성 혹은 Provide 생성)
+2. 공급범위 지정 -> 생성된 공급자로 공급할 컴포넌트를 감싸줌
+3. useContext(context): 공급한 데이터를 가져와서 사용
+
+context 폴더 따로 빼서 관리하는 경우 많음
+프롭스 넘 깊은데 전역관리애매한 변수일 때 굿인듯?
+근데 렌더링 이슈 감안해야함 최적화필
+
+</div>
+</details>
+
+---
 
 <details>
 <summary>템플릿</summary>
@@ -282,4 +409,3 @@ forwardRef()
 
 </div>
 </details>
-````
