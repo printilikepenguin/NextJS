@@ -401,6 +401,62 @@ context 폴더 따로 빼서 관리하는 경우 많음
 </div>
 </details>
 
+<details>
+<summary>0927</summary>
+<div markdown="5">
+
+```
+const [formState, setFormState] = useSttate({
+  name: "",
+  email: ""
+})
+
+const conChangeFormState = (e) => {
+  setFormState((formState) => ({
+    ...formState,
+    [e.target.name] : e.tartget.value
+  }))
+}
+```
+
+함수 로직 내부사이에 특정기능을 위해리액트 훅이 사용되었다면 커스텀훅
+아니면 그냥 함수
+**커스텀훅!!**
+기존 훅을 더 디벨롭시키고 싶을 때
+
+**REST API**
+데이터 통신의 아키텍처 패턴 중 하나
+상태를 표현하여 전송하는 API
+자원기반
+HTTM Method 사용
+
+API 가 항상 빨리 올거라고 예상하지 마라!!!!!
+사용자경험의 향상을 신경쓸 것!!
+
+fetchData는 상위? 하위? 어디서 일어나야할까?
+API의 성능에 따라 달라지겟지 위치는 크게 신경쓰이지 않겠지만
+컴포넌트를 어케 구성하느냐에 따라
+상위가 아니면 안되는 경우가 있다
+설계차이지 성능차이는 없을거임
+
+navigate("/") <- 이런식으로 쓰는걸 '프로그래밍 방식 페이지 이동'이라고 함
+Link태그랑 차이?
+
+reactrouterProvider router={router}
+https://velog.io/@adultlee/createBrowserRouter를-통한-Router기능-추가
+
+**Next.JS**
+
+hydration: NExt.JS에서 자바스크립트를 입히는 과정
+메말라있는 페이지가 hydration이 되면 자스가 뿌려지면 인터랙션이 생긴다
+SEO 친화적으로 가려면 버튼쓰지말고
+버튼처럼 생긴거 a태그로 하는게 조음
+
+`npx create-next-app@latest`
+
+</div>
+</details>
+
 ---
 
 <details>
