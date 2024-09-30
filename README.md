@@ -460,8 +460,143 @@ SEO 친화적으로 가려면 버튼쓰지말고
 ---
 
 <details>
+<summary>0930</summary>
+<div markdown="5">
+
+**next.js 시작하기**
+
+```
+npx create-next-app@latest my-project --typescript --eslint
+cd my-project
+```
+
+**스타일링**
+모듈 CSS 추천, 테일윈드가 베스트
+
+```
+import styles from "./OOO.module.css"
+
+{styles.title}
+```
+
+구글폰트 패키지가 있음
+`next/font/google`
+폰트함수 인스턴스는 폰트명에 올리면 확인 가능
+서브셋 활용하면 특정 언어 글꼴만 불러와서 폰트 최적화 가능
+한국어는 서브셋이 없지만, 애초에 \_KR 같이 preload를 false 하는 법도 있음
+
+로컬에서 폰트사용하려면
+
+```
+// public/fonts/local_fonts.ts
+import localFont from "next/font/local";
+export const 글꼴 = localFont({
+  src: [
+    {
+      path: "./local/글꼴.woff2",
+    },
+    {
+      path: "./local/글꼴.woff",
+    },
+  ],
+});
+```
+
+외부 이미지 가져올 때 추가설정 필
+
+```
+// next.config.mjs
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "주소.com",
+        port: "",
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+```
+
+Image태그에 width, heigth 필수
+로딩 priority ={true} 설정하면 시의적절하게 중요한 페이지에서 사용가능
+
+**라우팅, 라우터, 라우트**
+: 사용자가 요청한 URL에 따라 어떤 페이지 보여줄지 결정하는 과정
+앱라우팅으로 URL과 페이지 파일 연결
+
+라우터: 라우팅 관리하고 처리하는 기능 제공 도구
+next/navigation
+
+라우트: URL과 특정 컴포넌트간 매핑
+
+**앱라우팅**
+
+```
+중첩 다이나믹
+app/
+└── diary/
+    ├── page.tsx - /diary
+    └── [id]/
+        ├── page.tsx -- /diary/1 or /diary/2 or /diary/3...
+        └── comment/
+            └── [reviewId]/
+                └── page.tsx. -- /diary/2/comment/1
+```
+
+```
+포괄적 경로(실무잘안씀)
+const Docs = ({
+  params,
+}: {
+  params: {
+    slug: string[];
+  };
+}) => {
+  console.log(params); // /docs 이후의 경로가 배열로 들어감 ex_/docs/1/user/1 -> [1, user, 1]
+  return (
+    <>
+      <h1>Docs Component</h1>
+    </>
+  );
+};
+export default Docs;
+```
+
+그룹폴더 (폴더명): 괄호씌운 폴더는 개발에서만 묶여있고 실제론 X, layout 같은 공통 컴포넌트 슬쩍 묶을 때 굿..
+프라이빗 폴더: 폴더 앞에 \_utils 이런식으로 언더스코어 붙이기
+
+layout에 html, body 태그 쓰는 건 최상위만
+
+**시스템파일**
+page.tsx
+중첩..?
+layout.tsx
+중첩가능 최상위루트만 html, body태그 사용 가능하고 나머지는 안쓰는게 좋음
+not-found.tsx
+중첩사용 가능하지만 navigation의 notFount(); 호출해서 써야함
+error.tsx
+"use client" 필수
+
+타입 알고싶을 때 consolo.log(props) 해봇셈
+
+**메타데이터**
+
+function gemerateMetadate({props}: {parks})
+
+</div>
+</details>\
+
+---
+
+<details>
 <summary>템플릿</summary>
 <div markdown="5">
 
 </div>
 </details>
+dpd==
