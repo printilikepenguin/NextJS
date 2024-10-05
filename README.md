@@ -586,10 +586,117 @@ error.tsx
 
 **메타데이터**
 
-function gemerateMetadate({props}: {parks})
+function generateMetadate({props}: {parks})
+
+정의는 layout에 해주면 좋음
+
+```
+단일페이지
+export const metadata = {
+  title: "Blog | Sucoding",
+};
+```
+
+```
+import React from "react";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const { id } = params;
+  return {
+    title: `Blog ${id} | Sucoding`,
+  };
+}
+
+export default function BlogPost({ params }: { params: { id: string } }) {
+  const { id } = params;
+  return (
+    <div>
+      <h1>Blog Post {id}</h1>
+    </div>
+  );
+}
+
+```
+
+```
+루트
+
+export const metadata = {
+  title: {
+    template: "Register | farmirang",
+    default: "for farmers | farmirang"
+    }
+  description: "community for urban farmers"
+};
+```
 
 </div>
-</details>\
+</details>
+
+---
+
+<details>
+<summary>1004</summary>
+<div markdown="5">
+
+머고 왜 갑자기 배포하뇨
+
+vercel 로그인해서 플젝생성 -> 깃허브 임포트 -> 빌드해보면 됨
+환경변수는 env.local에 있는거 똑같이 옮겨서 빌드 같이해주셈
+
+```
+NEXT_PUBLIC_DOMAIN_URL=http://localhost:3000
+NEXT_PUBLIC_TMDB_URL=https://api.themoviedb.org/3/movie
+NEXT_PUBLIC_TMDB_KEY=ey어쩌구
+```
+
+빌드완료되면 vercel 셋팅 들어가서
+
+```
+NEXT_PUBLIC_DOMAIN_URL=버셀배포주소
+```
+
+로 환경변수 변경? 등록해주고 나머지는 그대로 등록해주면 됨
+
+CI/CD 자동으로 구축돼서 커밋푸쉬하면 자동빌드됨 근데
+`at process.processTicksAndRejections (node:internal/process/task_queues:95:5)`
+오류 이지랄
+그럼 주석하고 배포햇다가 다시 주석풀고 재배포하면 해결됨
+
+```
+000@000ui-MacBookPro server-action % npx vercel link
+Vercel CLI 37.6.1
+> No existing credentials found. Please log in:
+? Log in to Vercel Continue with GitHub
+> Please visit the following URL in your web browser:
+> Success! GitHub authentication complete for 0000@mail.com
+? Set up “~/Desktop/server-action”? yes
+? Which scope should contain your project? printilikepenguin's projects
+? Link to existing project? yes
+? What’s the name of your existing project?
+000@000ui-MacBookPro server-action % npx vercel link
+Vercel CLI 37.6.1
+? Set up “~/Desktop/server-action”? yes
+? Which scope should contain your project? printilikepenguin's projects
+? Found project “printilikepenguins-projects/server-action”. Link to it? yes
+✅  Linked to printilikepenguins-projects/server-action (created .vercel)
+000@000ui-MacBookPro server-action % ver env pull .env.development.local
+ver env pull .env.development.local
+zsh: command not found: ver
+000@000ui-MacBookPro server-action % vercel env pull .env.development.local
+zsh: command not found: vercel
+000@000ui-MacBookPro server-action % ;2B;2B
+```
+
+supabase: 로그인 연동
+next.auth 써도 괜찮음
+
+</div>
+</details>
 
 ---
 
@@ -599,4 +706,3 @@ function gemerateMetadate({props}: {parks})
 
 </div>
 </details>
-dpd==

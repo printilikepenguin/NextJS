@@ -1,17 +1,21 @@
 import React from "react";
 
-export function generateMetadata({ params }) {
-  const { id } = params;
+export async function generateMetadata({
+  params,
+}: {
+  params: { blogid: string };
+}) {
+  const { blogid } = params;
   return {
-    title: `Blog ${id} | Sucoding`,
+    title: `Blog ${blogid} | Sucoding`,
   };
 }
 
-export default function BlogPost({ params }) {
-  const { id } = params;
+export default function BlogPost({ params }: { params: { blogid: string } }) {
+  const { blogid } = params;
   return (
     <div>
-      <h1>Blog Post {id}</h1>
+      <h1>Blog Post {blogid}</h1>
     </div>
   );
 }
